@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+    <h1>profile</h1> <br>
+    name: {{profile.user.first_name}} {{profile.user.last_name}} <br>
+    email {{profile.user.email}} <br>
+    image: <img src="{% thumbnail profile.image 300x0%}" alt=""> <br>
+    <br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{user_form.as_p}}
+        {{profile_form.as_p}}
+        <input type="submit" value="Update">
+    </form>
+    <br>
+    <br>
+    <a href="{% url 'password_change' %}"><button>change password</button></a>
+{% endblock content %}
+    

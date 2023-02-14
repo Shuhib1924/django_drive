@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'new_folder' %}">create new folder</a>
+    <br><br>
+    
+    {% for folder in folders %}
+        <a href="{% url 'open_folder' folder.pk %}">{{folder|linebreaks}}</a>
+    {% endfor %}
+        
+{% endblock content %}
+    
