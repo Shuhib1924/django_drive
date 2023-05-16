@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <a href="{% url 'new_folder' %}">create new folder</a>
+    <br><br>
+    {% for f in folders.allfiles.all %} 
+        <a href="{{f.file.url}}">{{f}}</a><br>
+    {% endfor %}
+        
+{% endblock content %}

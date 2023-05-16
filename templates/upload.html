@@ -1,0 +1,33 @@
+<!-- Button to Open the Modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Upload
+  </button>
+  
+  <!-- The Modal -->
+  <form method="POST" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+    {% csrf_token %}
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <input type="file" name="uploadfile">
+          <input type="hidden" name="fid" value="{{folders.pk}}">
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <input type="submit" value="Upload">
+        </div>
+  
+      </div>
+    </div>
+  </div>
+</form>

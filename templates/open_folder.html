@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
     <a href="{% url 'new_folder' %}">create new folder</a>
+
+    <form action="{% url 'delete_folder' folders.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="delete this folder">
+    </form>
     <br><br>
-    
+    {% include 'upload.html' %}
+    <br><br>    
     {% for folder in folders.folder_within.all  %}
         <a href="{% url 'open_folder' folder.pk %}">{{folder.name|linebreaks}}</a>
     {% endfor %}
@@ -10,7 +16,24 @@
 
     <br><br>
     {% for f in folders.allfiles.all %}
-        <a href="{{f.file.url}}">{{f}}</a><br>
+        <div>
+            <a href="{{f.file.url}}">{{f.filename}}</a><button onclick="del_file(this.id)" id="{{f.pk}}" class="button">delete</button><br>
+        </div>
     {% endfor %}
         
+
+    <script>
+        function del_file(del_file_id){
+            fetch(`{% url 'delete_file' %}?pk=${del_file_id}&user={{request.user}}`, {
+                method: "POST",
+                headers: {"X-CSRFToken":"{{csrf_token}}"}
+            }).then(response=>response.json()).then(data =>{
+                console.log(data)
+                if (data.status==200){
+                    file = document.getElementById(del_file_id).parentElement.remove()
+                }
+            })
+        }
+    </script>
 {% endblock content %}
+
